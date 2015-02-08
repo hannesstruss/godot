@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script>
+        var DATA = [
+           $records
+        ];
+    </script>
+</head>
+<body>
+    <h1>This is how much time you spent:</h1>
+    <% infos.each { info -> %>
+    <h2>${info.title}:</h2>
+    <ul>
+        <li>Number of builds: $info.numBuilds</li>
+        <li>Total time: ${info.formatTime()}</li>
+    </ul>
+    <% } %>
+</body>
+</html>

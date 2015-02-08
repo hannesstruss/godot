@@ -6,9 +6,7 @@ import org.gradle.api.Project
 import org.joda.time.DateTime
 
 class GodotPlugin implements Plugin<Project> {
-  private final gson = new GsonBuilder()
-      .registerTypeAdapter(DateTime.class, new DateTimeConverter())
-      .create();
+  private final gson = GsonFactory.get()
 
   @Override
   void apply(Project project) {
@@ -19,7 +17,8 @@ class GodotPlugin implements Plugin<Project> {
       log(project, seconds.toDouble(), buildResult.getFailure() == null)
     }
 
-    def generate = project.tasks.create("generateGodoReport", GenerateReportTask)
+    def generate = project.tasks.create("generateGodotReport", GenerateReportTask)
+    generate.inputFile = new File("${project.rootDir}/godot.log")
     generate.outputDir = new File("${project.buildDir}/outputs/godot")
   }
 
