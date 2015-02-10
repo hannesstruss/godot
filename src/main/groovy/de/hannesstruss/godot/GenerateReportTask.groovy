@@ -12,6 +12,7 @@ class GenerateReportTask extends DefaultTask {
 
   @TaskAction
   public void generate() {
+    outputDir.mkdirs();
     def outputFile = new File(outputDir, "report.html")
 
     def resource = getClass().getResource("/report/report.html")
