@@ -2,6 +2,7 @@ package de.hannesstruss.godot
 
 import groovy.text.SimpleTemplateEngine
 import org.joda.time.DateTime
+import org.joda.time.LocalDate
 
 class ReportGenerator {
   public String generate(File outputFile, List<LogRecord> logRecords, String projectName) {
@@ -28,6 +29,7 @@ class ReportGenerator {
         secondsLastWeek: secondsSpentSince({ it.minusDays 7 }, logRecords),
         secondsLastMonth: secondsSpentSince({ it.minusDays 31 }, logRecords),
         projectName: projectName,
+        today: new LocalDate().toString("EEEE, MMMM d, y"),
         fmt: new TimeFormatter()
     ]
   }
