@@ -27,7 +27,7 @@ class GenerateReportTask extends DefaultTask {
       def records = LogParser.parse(inputFile);
 
       def generator = new ReportGenerator()
-      generator.generate(outputFile, records, getProject().name)
+      generator.generate(new FileWriter(outputFile), records, getProject().name)
 
       println "Wrote Godot report to: $outputFile"
     } else {

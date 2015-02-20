@@ -5,12 +5,11 @@ import org.joda.time.DateTime
 import org.joda.time.LocalDate
 
 class ReportGenerator {
-  public String generate(File outputFile, List<LogRecord> logRecords, String projectName) {
+  public String generate(Writer outputWriter, List<LogRecord> logRecords, String projectName) {
     def resource = getClass().getResource("/report/report.html")
     def template = resource.text
     def engine = new SimpleTemplateEngine()
-    def writer = new FileWriter(outputFile)
-    engine.createTemplate(template).make(getData(logRecords, projectName)).writeTo(writer)
+    engine.createTemplate(template).make(getData(logRecords, projectName)).writeTo(outputWriter)
   }
 
   private static Map getData(List<LogRecord> logRecords, String projectName) {
