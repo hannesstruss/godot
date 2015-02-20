@@ -29,7 +29,7 @@ class GenerateReportTask extends DefaultTask {
     def models = records.collect { gson.fromJson(it, LogRecord) }
 
     def generator = new ReportGenerator()
-    generator.generate(outputFile, models)
+    generator.generate(outputFile, models, getProject().name)
 
     println "Wrote Godot report to: $outputFile"
   }

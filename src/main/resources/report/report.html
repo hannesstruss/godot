@@ -89,10 +89,10 @@
 </head>
 <body>
   <header>
-    <h1>In the last week, you've spent over three hours building Blinkist with Gradle.</h1>
+    <h1>In the last week, you've spent over ${fmt.verbalSeconds(secondsLastWeek)} building $projectName with Gradle.</h1>
 
     <div>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://github.com/hannesstruss/godot/" data-text="Last week, I spent 3.5 hours building with Gradle" data-size="large" data-count="none">Tweet</a>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://github.com/hannesstruss/godot/" data-text="Last week, I spent over ${fmt.verbalSeconds(secondsLastWeek)} building with Gradle" data-size="large" data-count="none">Tweet</a>
       <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     </div>
   </header>
@@ -142,21 +142,6 @@
   <script>
 
     var DATA = JSON.parse(document.querySelector("#godot-data").innerText);
-    // var now = +new Date()
-    // var num = 19;
-    // for (var n = 0; n <= num; n++) {
-    //   if (n == 3) {
-    //     continue;
-    //   }
-    //   var builds = 30 + Math.random() * 20;
-    //   for (var nn = 0; nn < builds; nn++) {
-    //     var record = {
-    //       "timestamp": now - (num - n) * 24 * 60 * 60 * 1000 + nn * 60 * 10 * 1000,
-    //       "Time": (30 + 3 * n * Math.random())
-    //     };
-    //     DATA.push(record);
-    //   }
-    // }
 
     var format = d3.time.format("%a");
     DATA.forEach(function(d) {

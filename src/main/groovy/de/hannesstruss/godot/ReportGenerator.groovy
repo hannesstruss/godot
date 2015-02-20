@@ -4,15 +4,15 @@ import groovy.text.SimpleTemplateEngine
 import org.joda.time.DateTime
 
 class ReportGenerator {
-  public String generate(File outputFile, List<LogRecord> logRecords) {
+  public String generate(File outputFile, List<LogRecord> logRecords, String projectName) {
     def resource = getClass().getResource("/report/report.html")
     def template = resource.text
     def engine = new SimpleTemplateEngine()
     def writer = new FileWriter(outputFile)
-    engine.createTemplate(template).make(getData(logRecords)).writeTo(writer)
+    engine.createTemplate(template).make(getData(logRecords, projectName)).writeTo(writer)
   }
 
-  private static Map getData(List<LogRecord> logRecords) {
+  private static Map getData(List<LogRecord> logRecords, String projectName) {
     def gson = GsonFactory.get()
 
 
@@ -27,7 +27,8 @@ class ReportGenerator {
         secondsToday: secondsSpentSince({ it }, logRecords),
         secondsLastWeek: secondsSpentSince({ it.minusDays 7 }, logRecords),
         secondsLastMonth: secondsSpentSince({ it.minusDays 31 }, logRecords),
-        fmt: new Formatter()
+        projectName: projectName,
+        fmt: new TimeFormatter()
     ]
   }
 
