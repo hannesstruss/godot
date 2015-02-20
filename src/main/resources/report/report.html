@@ -1,23 +1,238 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+  <meta charset="UTF-8">
+  <title>Godot Report</title>
 
-    <script>
-        var DATA = [
-           $records
-        ];
-    </script>
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,500' rel='stylesheet' type='text/css'>
+
+  <style type="text/css">
+    body {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #333;
+      line-height: 1.2em;
+    }
+
+    h1 {
+      line-height: 1.5em;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    header {
+      padding: 110px;
+      background: #0F5164;
+      color: white;
+    }
+
+    header h1 {
+      width: 600px;
+      margin: 0 auto 50px;
+    }
+
+    .container {
+      width: 960px;
+      margin: 0 auto;
+    }
+
+    .row:before, .row:after {
+      content: " ";
+      display: table;
+    }
+
+    .row:after {
+      clear: both;
+    }
+
+    .row.summary {
+      margin-top: 80pt;
+      margin-bottom: 60pt;
+    }
+
+    .col {
+      width: 33.333333333%;
+      padding: 0 10px;
+      float: left;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .col .time {
+      display: block;
+      font-size: 2em;
+      font-weight: 500;
+      line-height: 1.2em;
+    }
+
+    .col .label {
+      font-size: 0.7em;
+      text-transform: uppercase;
+    }
+
+    footer {
+      background: #0F5164;
+      padding: 125px 0;
+      margin-top: 150px;
+      color: #7C9CA5;
+      font-size: 12px;
+    }
+
+    footer a {
+      color: #eee;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    data {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-    <h1>This is how much time you spent:</h1>
-    <% infos.each { info -> %>
-    <h2>${info.title}:</h2>
-    <ul>
-        <li>Number of builds: $info.numBuilds</li>
-        <li>Total time: ${info.formatTime()}</li>
-    </ul>
-    <% } %>
+  <header>
+    <h1>In the last week, you've spent over three hours building Blinkist with Gradle.</h1>
+
+    <div>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://github.com/hannesstruss/godot/" data-text="Last week, I spent 3.5 hours building with Gradle" data-size="large" data-count="none">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row summary">
+      <div class="col">
+        <span class="time">0:35:11</span>
+        <span class="label">Today</span>
+      </div>
+
+      <div class="col">
+        <span class="time">0:35:11</span>
+        <span class="label">Last week</span>
+      </div>
+
+      <div class="col">
+        <span class="time">0:35:11</span>
+        <span class="label">Last month</span>
+      </div>
+    </div>
+
+
+    <div class="graph-week"></div>
+
+    <div class="graph-scatter"></div>
+
+  </div>
+
+  <footer>
+    <span class="generated-on">
+      Generated on Monday, February 16th 2015
+    </span>
+    <br>
+    <span>
+      Made with <a href="https://github.com/hannesstruss/godot/">Godot</a>
+    </span>
+  </footer>
+
+  <data>
+    $records
+  </data>
+
+  <script src="assets/d3.js"></script>
+  <script src="assets/dimple.js"></script>
+
+  <script>
+
+    var DATA = JSON.parse(document.querySelector("data").innerText);
+    // var now = +new Date()
+    // var num = 19;
+    // for (var n = 0; n <= num; n++) {
+    //   if (n == 3) {
+    //     continue;
+    //   }
+    //   var builds = 30 + Math.random() * 20;
+    //   for (var nn = 0; nn < builds; nn++) {
+    //     var record = {
+    //       "timestamp": now - (num - n) * 24 * 60 * 60 * 1000 + nn * 60 * 10 * 1000,
+    //       "Time": (30 + 3 * n * Math.random())
+    //     };
+    //     DATA.push(record);
+    //   }
+    // }
+
+    var format = d3.time.format("%a");
+    DATA.forEach(function(d) {
+      d["timestamp"] = Date.parse(d["loggedAt"]);
+      var date = new Date(d["timestamp"]);
+      d["Date"] = date;
+      d["Day"] = format(date) + ", " + date.getDate();
+      d["Time"] = d["seconds"];
+    });
+
+  </script>
+
+  <script>
+
+    function zeroPad(x) {
+      if (x < 10) {
+        return "0" + x;
+      }
+      return x;
+    }
+
+    function formatSeconds(seconds) {
+      var s = zeroPad(Math.floor(seconds % 60));
+      var m = zeroPad(Math.floor(seconds / 60 % 60));
+      var h = zeroPad(Math.floor(seconds / 60 / 60));
+      return h + ":" + m + ":" + s;
+    }
+
+    function makeWeekChart(data) {
+      var svg = dimple.newSvg(".graph-week", 800, 300);
+      var chart = new dimple.chart(svg, data);
+
+      var xAxis = chart.addCategoryAxis("x", "Day");
+      xAxis.addOrderRule("timestamp");
+
+      var yAxis = chart.addMeasureAxis("y", "Time");
+      yAxis._getFormat = function() {
+        return formatSeconds;
+      };
+
+      var series = chart.addSeries(null, dimple.plot.bar);
+      series.getTooltipText = function(d) {
+        return [
+          "Time spent: " + formatSeconds(d.yValue)
+        ];
+      }
+
+      chart.draw();
+    }
+
+    function makeScatterChart(data) {
+      var svg = dimple.newSvg(".graph-scatter", 590, 400);
+      var myChart = new dimple.chart(svg, data);
+      myChart.addTimeAxis("x", "Date");
+      myChart.addMeasureAxis("y", "Time");
+      myChart.addSeries(null, dimple.plot.bubble);
+      myChart.draw();
+    }
+
+  </script>
+
+  <script>
+    var nineDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 9);
+    nineDaysAgo.setHours(0);
+    nineDaysAgo.setMinutes(0);
+    nineDaysAgo.setSeconds(0);
+    makeWeekChart(DATA.filter(function(d) {
+      return d.timestamp > nineDaysAgo.getTime();
+    }));
+
+    // makeScatterChart(DATA);
+  </script>
+
 </body>
 </html>
