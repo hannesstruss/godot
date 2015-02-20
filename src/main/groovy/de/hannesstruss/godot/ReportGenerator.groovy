@@ -16,13 +16,6 @@ class ReportGenerator {
   private static Map getData(List<LogRecord> logRecords, String projectName) {
     def gson = GsonFactory.get()
 
-
-//    def infos = [
-//        PeriodInfo.fromBuilds("Today", models.findAll { it.loggedAt.isAfter(today) }),
-//        PeriodInfo.fromBuilds("Last 30 days", models.findAll { it.loggedAt.isAfter(oneMonthAgo) }),
-//        PeriodInfo.fromBuilds("Last Year", models.findAll { it.loggedAt.isAfter(oneYearAgo) })
-//    ]
-
     return [
         records: gson.toJson(logRecords),
         secondsToday: secondsSpentSince({ it }, logRecords),
