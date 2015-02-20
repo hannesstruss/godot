@@ -1,10 +1,9 @@
 package de.hannesstruss.godot
 
-import groovy.text.SimpleTemplateEngine
+import de.hannesstruss.godot.generator.ReportGenerator
 import org.apache.commons.io.IOUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
-import org.joda.time.DateTime
 
 class GenerateReportTask extends DefaultTask {
   private static final String[] STATIC_FILES = ["d3.js", "dimple.js"]

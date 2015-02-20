@@ -1,5 +1,7 @@
-package de.hannesstruss.godot
+package de.hannesstruss.godot.generator
 
+import de.hannesstruss.godot.GsonFactory
+import de.hannesstruss.godot.LogRecord
 import groovy.text.SimpleTemplateEngine
 import org.joda.time.DateTime
 import org.joda.time.LocalDate

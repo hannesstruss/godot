@@ -1,4 +1,4 @@
-package de.hannesstruss.godot
+package de.hannesstruss.godot.generator
 
 class TimeFormatter {
   public String seconds(int seconds) {
