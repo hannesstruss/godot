@@ -85,10 +85,6 @@
       font-weight: 700;
       text-decoration: none;
     }
-
-    data {
-      display: none;
-    }
   </style>
 </head>
 <body>
@@ -104,18 +100,18 @@
   <div class="container">
     <div class="row summary">
       <div class="col">
-        <span class="time">0:35:11</span>
+        <span class="time">${fmt.seconds(secondsToday)}</span>
         <span class="label">Today</span>
       </div>
 
       <div class="col">
-        <span class="time">0:35:11</span>
-        <span class="label">Last week</span>
+        <span class="time">${fmt.seconds(secondsLastWeek)}</span>
+        <span class="label">Last 7 days</span>
       </div>
 
       <div class="col">
-        <span class="time">0:35:11</span>
-        <span class="label">Last month</span>
+        <span class="time">${fmt.seconds(secondsLastMonth)}</span>
+        <span class="label">Last 30 days</span>
       </div>
     </div>
 
@@ -136,16 +132,16 @@
     </span>
   </footer>
 
-  <data>
+  <script type="application/json" id="godot-data">
     $records
-  </data>
+  </script>
 
   <script src="assets/d3.js"></script>
   <script src="assets/dimple.js"></script>
 
   <script>
 
-    var DATA = JSON.parse(document.querySelector("data").innerText);
+    var DATA = JSON.parse(document.querySelector("#godot-data").innerText);
     // var now = +new Date()
     // var num = 19;
     // for (var n = 0; n <= num; n++) {
