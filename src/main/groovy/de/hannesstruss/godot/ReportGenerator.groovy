@@ -1,10 +1,17 @@
 package de.hannesstruss.godot
 
+import de.hannesstruss.godot.datetime.Clock
 import groovy.text.SimpleTemplateEngine
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 
 class ReportGenerator {
+  Clock clock
+
+  ReportGenerator(Clock clock) {
+    this.clock = clock
+  }
+
   public String generate(Writer outputWriter, List<LogRecord> logRecords, String projectName) {
     def resource = getClass().getResource("/report/report.html")
     def template = resource.text
@@ -12,7 +19,7 @@ class ReportGenerator {
     engine.createTemplate(template).make(getData(logRecords, projectName)).writeTo(outputWriter)
   }
 
-  private static Map getData(List<LogRecord> logRecords, String projectName) {
+  private Map getData(List<LogRecord> logRecords, String projectName) {
     def gson = GsonFactory.get()
 
     return [
@@ -26,8 +33,8 @@ class ReportGenerator {
     ]
   }
 
-  private static secondsSpentSince(mkStartDate, List<LogRecord> records) {
-    def today = DateTime.now().withTimeAtStartOfDay()
+  private secondsSpentSince(mkStartDate, List<LogRecord> records) {
+    def today = clock.now().withTimeAtStartOfDay()
     DateTime startDate = mkStartDate(today)
 
     records

@@ -1,5 +1,6 @@
 package de.hannesstruss.godot
 
+import de.hannesstruss.godot.datetime.WallClock
 import org.apache.commons.io.IOUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
@@ -26,7 +27,7 @@ class GenerateReportTask extends DefaultTask {
     if (inputFile.exists()) {
       def records = LogParser.parse(inputFile);
 
-      def generator = new ReportGenerator()
+      def generator = new ReportGenerator(new WallClock())
       generator.generate(new FileWriter(outputFile), records, getProject().name)
 
       println "Wrote Godot report to: $outputFile"
