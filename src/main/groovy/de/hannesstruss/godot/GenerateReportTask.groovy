@@ -4,6 +4,7 @@ import de.hannesstruss.godot.generator.ReportGenerator
 import org.apache.commons.io.IOUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.TaskExecutionException
 
 class GenerateReportTask extends DefaultTask {
   private static final String[] STATIC_FILES = ["d3.js", "dimple.js"]
@@ -22,15 +23,17 @@ class GenerateReportTask extends DefaultTask {
 
   private void generateReportHtml() {
     def outputFile = new File(outputDir, "report.html")
-    def gson = GsonFactory.get()
 
-    List<String> records = inputFile.readLines().findAll({ it.startsWith('{') })
-    def models = records.collect { gson.fromJson(it, LogRecord) }
+    if (inputFile.exists()) {
+      def models = LogParser.parse(inputFile);
 
-    def generator = new ReportGenerator()
-    generator.generate(outputFile, models, getProject().name)
+      def generator = new ReportGenerator()
+      generator.generate(outputFile, models, getProject().name)
 
-    println "Wrote Godot report to: $outputFile"
+      println "Wrote Godot report to: $outputFile"
+    } else {
+      throw new TaskExecutionException(this, new RuntimeException("Wait a minute, you haven't logged any builds yet!"))
+    }
   }
 
   private void copyStaticFiles() {
@@ -44,8 +47,4 @@ class GenerateReportTask extends DefaultTask {
       IOUtils.closeQuietly(os)
     }
   }
-
-
-
-
 }
