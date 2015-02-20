@@ -1,6 +1,5 @@
 package de.hannesstruss.godot
 
-import de.hannesstruss.godot.generator.ReportGenerator
 import org.apache.commons.io.IOUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
