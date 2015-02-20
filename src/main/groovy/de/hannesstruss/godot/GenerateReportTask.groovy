@@ -24,10 +24,10 @@ class GenerateReportTask extends DefaultTask {
     def outputFile = new File(outputDir, "report.html")
 
     if (inputFile.exists()) {
-      def models = LogParser.parse(inputFile);
+      def records = LogParser.parse(inputFile);
 
       def generator = new ReportGenerator()
-      generator.generate(outputFile, models, getProject().name)
+      generator.generate(outputFile, records, getProject().name)
 
       println "Wrote Godot report to: $outputFile"
     } else {
