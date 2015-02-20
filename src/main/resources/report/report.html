@@ -72,6 +72,10 @@
       text-transform: uppercase;
     }
 
+    section.chart {
+      /*margin: 170px 0;*/
+    }
+
     footer {
       background: #0F5164;
       padding: 125px 0;
@@ -115,10 +119,15 @@
       </div>
     </div>
 
+    <section class="chart">
+      <h2>Time spent recently</h2>
+      <div class="graph-week"></div>
+    </section>
 
-    <div class="graph-week"></div>
-
-    <div class="graph-scatter"></div>
+    <section class="chart">
+      <h2>Average time spent per day</h2>
+      <div class="graph-avg"></div>
+    </section>
 
   </div>
 
@@ -141,21 +150,6 @@
 
   <script>
 
-    var DATA = JSON.parse(document.querySelector("#godot-data").innerText);
-
-    var format = d3.time.format("%a");
-    DATA.forEach(function(d) {
-      d["timestamp"] = Date.parse(d["loggedAt"]);
-      var date = new Date(d["timestamp"]);
-      d["Date"] = date;
-      d["Day"] = format(date) + ", " + date.getDate();
-      d["Time"] = d["seconds"];
-    });
-
-  </script>
-
-  <script>
-
     function zeroPad(x) {
       if (x < 10) {
         return "0" + x;
@@ -170,14 +164,65 @@
       return h + ":" + m + ":" + s;
     }
 
+    function setToMidnight(date) {
+      date.setHours(0);
+      date.setMinutes(0);
+      date.setSeconds(0);
+    }
+
+    function getDummyData() {
+      var data = [];
+      var now = +new Date()
+      var num = 19;
+      for (var n = 0; n <= num; n++) {
+        if (n == 3) {
+          continue;
+        }
+        var builds = 30 + Math.random() * 20;
+        for (var nn = 0; nn < builds; nn++) {
+          var record = {
+            "loggedAt": new Date(now - (num - n) * 24 * 60 * 60 * 1000 + nn * 60 * 10 * 1000).toISOString(),
+            "seconds": (30 + 3 * n * Math.random())
+          };
+          data.push(record);
+        }
+      }
+      return data;
+    }
+
+  </script>
+
+  <script>
+
+    var DATA = JSON.parse(document.querySelector("#godot-data").innerText);
+
+    // var DATA = getDummyData();
+
+    var format = d3.time.format("%a");
+    DATA.forEach(function(d) {
+      var date = new Date(Date.parse(d["loggedAt"]));
+      d["Date"] = date;
+      d["Day"] = format(date) + ", " + date.getDate();
+      var dateAtMidnight = new Date(date);
+      setToMidnight(dateAtMidnight);
+      d["DayDate"] = dateAtMidnight;
+    });
+
+  </script>
+
+  <script>
+
     function makeWeekChart(data) {
       var svg = dimple.newSvg(".graph-week", 800, 300);
       var chart = new dimple.chart(svg, data);
+      chart.defaultColors = [
+        new dimple.color("#85A5AE")
+      ];
 
       var xAxis = chart.addCategoryAxis("x", "Day");
-      xAxis.addOrderRule("timestamp");
+      xAxis.addOrderRule("loggedAt");
 
-      var yAxis = chart.addMeasureAxis("y", "Time");
+      var yAxis = chart.addMeasureAxis("y", "seconds");
       yAxis._getFormat = function() {
         return formatSeconds;
       };
@@ -196,23 +241,36 @@
       var svg = dimple.newSvg(".graph-scatter", 590, 400);
       var myChart = new dimple.chart(svg, data);
       myChart.addTimeAxis("x", "Date");
-      myChart.addMeasureAxis("y", "Time");
+      myChart.addMeasureAxis("y", "seconds");
       myChart.addSeries(null, dimple.plot.bubble);
       myChart.draw();
+    }
+
+    function makeAvgChart(data) {
+      var svg = dimple.newSvg(".graph-avg", 800, 400);
+      var chart = new dimple.chart(svg, data);
+      chart.defaultColors = [
+        new dimple.color("#85A5AE")
+      ];
+      chart.addTimeAxis("x", "DayDate");
+      var yAxis = chart.addMeasureAxis("y", "seconds");
+      yAxis.title = "Avg. seconds";
+      var series = chart.addSeries(null, dimple.plot.line);
+      series.aggregate = dimple.aggregateMethod.avg;
+      chart.draw();
     }
 
   </script>
 
   <script>
-    var nineDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 9);
-    nineDaysAgo.setHours(0);
-    nineDaysAgo.setMinutes(0);
-    nineDaysAgo.setSeconds(0);
+    var nineDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7);
+    setToMidnight(nineDaysAgo);
     makeWeekChart(DATA.filter(function(d) {
-      return d.timestamp > nineDaysAgo.getTime();
+      return d["Date"].getTime() > nineDaysAgo.getTime();
     }));
 
     // makeScatterChart(DATA);
+    makeAvgChart(DATA);
   </script>
 
 </body>
