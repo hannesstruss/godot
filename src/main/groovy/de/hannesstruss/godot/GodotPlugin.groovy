@@ -2,6 +2,7 @@ package de.hannesstruss.godot
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.BasePlugin
 import org.joda.time.DateTime
 
 class GodotPlugin implements Plugin<Project> {
@@ -10,6 +11,9 @@ class GodotPlugin implements Plugin<Project> {
 
   @Override
   void apply(Project project) {
+    // apply base plugin to get a free clean task
+    project.apply plugin: BasePlugin
+
     def start = System.currentTimeMillis()
 
     project.gradle.buildFinished { buildResult ->
@@ -20,9 +24,11 @@ class GodotPlugin implements Plugin<Project> {
       }
     }
 
+    def outputDir = new File("${project.buildDir}/outputs/godot")
+
     def generate = project.tasks.create(GENERATE_TASK_NAME, GenerateReportTask)
     generate.inputFile = new File("${project.rootDir}/godot.log")
-    generate.outputDir = new File("${project.buildDir}/outputs/godot")
+    generate.outputDir = outputDir
   }
 
   def log(Project project, double seconds, boolean wasSuccessful) {

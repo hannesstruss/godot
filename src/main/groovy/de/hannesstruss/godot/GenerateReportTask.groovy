@@ -3,6 +3,7 @@ package de.hannesstruss.godot
 import de.hannesstruss.godot.datetime.WallClock
 import org.apache.commons.io.IOUtils
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskExecutionException
 
@@ -11,6 +12,7 @@ class GenerateReportTask extends DefaultTask {
 
   File inputFile
 
+  @OutputDirectory
   File outputDir
 
   @TaskAction
