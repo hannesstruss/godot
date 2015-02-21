@@ -125,7 +125,7 @@
     </section>
 
     <section class="chart">
-      <h2>Average time spent per day</h2>
+      <h2>Average/Max time spent per day</h2>
       <div class="graph-avg"></div>
     </section>
 
@@ -249,14 +249,25 @@
     function makeAvgChart(data) {
       var svg = dimple.newSvg(".graph-avg", 800, 400);
       var chart = new dimple.chart(svg, data);
-      chart.defaultColors = [
-        new dimple.color("#85A5AE")
-      ];
-      chart.addTimeAxis("x", "DayDate");
+
+      var xAxis = chart.addTimeAxis("x", "DayDate");
+      xAxis.tickFormat = "%b %e"
+      xAxis.title = "Date";
+
       var yAxis = chart.addMeasureAxis("y", "seconds");
       yAxis.title = "Avg. seconds";
-      var series = chart.addSeries(null, dimple.plot.line);
+
+      var series = chart.addSeries("Avg.", dimple.plot.line);
       series.aggregate = dimple.aggregateMethod.avg;
+
+      var seriesMax = chart.addSeries("Max", dimple.plot.line);
+      series.aggregate = dimple.aggregateMethod.max;
+
+      chart.assignColor("Max", "#CF6A6A");
+      chart.assignColor("Avg.", "#85A5AE");
+
+      chart.addLegend(0, 10, 700, 20, "right");
+
       chart.draw();
     }
 
