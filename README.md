@@ -3,6 +3,11 @@ What is Godot?
 
 Do you like waiting? Godot is for passionate thumb-twiddlers of the quantified-self-era. A Gradle plugin to help you keep track of how much time you spend waiting for builds to finish.
 
+### Isn't that like the `--profile` option in Gradle?
+
+`--profile` only summarizes the timing of one build, whereas Godot keeps track of
+how your build duration changes over time.
+
 How to use this
 ---------------
 
@@ -32,7 +37,9 @@ builds took. Continue working for a couple of days, then run
 
 and Godot will generate a [nice report][4] with some charts.
 
-You should probably also add `godot.log` to your VCS ignores, e.g. `.gitignore`.
+You may or may not want to add `godot.log` to your VCS ignores (e.g.
+`.gitignore`), although as of now it is recommended. If you know a good location
+to put this file in, [let me know!][5]
 
 
 Credits
@@ -64,3 +71,4 @@ License
  [2]: http://d3js.org/
  [3]: http://dimplejs.org/
  [4]: http://hannesstruss.github.io/godot/report.html
+ [5]: http://forums.gradle.org/gradle/topics/is-it-bad-practice-for-a-plugin-to-write-to-gradle-user-home
