@@ -3,6 +3,7 @@ package de.hannesstruss.godot
 import de.hannesstruss.godot.datetime.WallClock
 import org.apache.commons.io.IOUtils
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskExecutionException
@@ -10,6 +11,7 @@ import org.gradle.api.tasks.TaskExecutionException
 class GenerateReportTask extends DefaultTask {
   private static final String[] STATIC_FILES = ["d3.js", "dimple.js"]
 
+  @InputFile
   File inputFile
 
   @OutputDirectory
