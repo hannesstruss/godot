@@ -30,7 +30,7 @@ builds took. Continue working for a couple of days, then run
 
     ./gradlew generateGodotReport
 
-and Godot will generate a nice report with some charts.
+and Godot will generate a [nice report][4] with some charts.
 
 You should probably also add `godot.log` to your VCS ignores, e.g. `.gitignore`.
 
@@ -63,3 +63,4 @@ License
  [1]: https://twitter.com/hannesstruss
  [2]: http://d3js.org/
  [3]: http://dimplejs.org/
+ [4]: http://hannesstruss.github.io/godot/report.html
