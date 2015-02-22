@@ -35,6 +35,12 @@ and Godot will generate a nice report with some charts.
 You should probably also add `godot.log` to your VCS ignores, e.g. `.gitignore`.
 
 
+Credits
+-------
+
+Godot is created by [Hannes Struß][1] with help from [d3.js][2] and [dimple][3].
+
+
 License
 -------
 
@@ -51,3 +57,9 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+
+
+ [1]: https://twitter.com/hannesstruss
+ [2]: http://d3js.org/
+ [3]: http://dimplejs.org/
