@@ -66,6 +66,8 @@ afterEvaluate { project ->
           authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
         }
 
+        def scmTag = getSCMTag()
+
         pom.project {
           name POM_NAME
           packaging POM_PACKAGING
@@ -76,7 +78,7 @@ afterEvaluate { project ->
             url POM_SCM_URL
             connection POM_SCM_CONNECTION
             developerConnection POM_SCM_DEV_CONNECTION
-            tag getSCMTag()
+            tag scmTag
           }
 
           licenses {
