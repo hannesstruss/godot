@@ -68,6 +68,7 @@ afterEvaluate { project ->
             url POM_SCM_URL
             connection POM_SCM_CONNECTION
             developerConnection POM_SCM_DEV_CONNECTION
+            tag version
           }
 
           licenses {

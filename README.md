@@ -19,13 +19,10 @@ Add the following to your project's root `build.gradle`:
 buildScript {
   repositories {
     jcenter()
-    maven {
-      url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
   }
   dependencies {
     // ... other buildscript dependencies, e.g. the Android Gradle plugin
-    classpath 'de.hannesstruss:godot:0.1-SNAPSHOT'
+    classpath 'de.hannesstruss:godot:0.1'
   }
 }
 
