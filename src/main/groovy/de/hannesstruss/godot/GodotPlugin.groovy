@@ -7,6 +7,9 @@ import org.joda.time.DateTime
 
 class GodotPlugin implements Plugin<Project> {
   private static final GENERATE_TASK_NAME = "generateGodotReport"
+  private static final String OUTPUT_DIR = "outputs/godot"
+  private static final String LOGFILE_NAME = "godot.log"
+  
   private final gson = GsonFactory.get()
 
   @Override
@@ -24,10 +27,10 @@ class GodotPlugin implements Plugin<Project> {
       }
     }
 
-    def outputDir = new File("${project.buildDir}/outputs/godot")
+    def outputDir = new File("${project.buildDir}/$OUTPUT_DIR")
 
     def generate = project.tasks.create(GENERATE_TASK_NAME, GenerateReportTask)
-    generate.inputFile = new File("${project.rootDir}/godot.log")
+    generate.inputFile = new File("${project.rootDir}/$LOGFILE_NAME")
     generate.outputDir = outputDir
   }
 
@@ -35,7 +38,7 @@ class GodotPlugin implements Plugin<Project> {
     def record = new LogRecord(DateTime.now(), project.gradle.startParameter.taskNames, seconds, wasSuccessful)
 
     def msg = gson.toJson(record)
-    def f = new File("$project.rootDir/godot.log")
+    def f = new File("$project.rootDir/$LOGFILE_NAME")
     f.append(msg + '\n')
   }
 }
