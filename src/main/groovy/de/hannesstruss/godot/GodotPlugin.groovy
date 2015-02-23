@@ -7,16 +7,38 @@ import org.joda.time.DateTime
 
 class GodotPlugin implements Plugin<Project> {
   private static final GENERATE_TASK_NAME = "generateGodotReport"
-  private static final String OUTPUT_DIR = "outputs/godot"
+  private static final String REPORT_OUTPUT_DIR = "reports/godot"
   private static final String LOGFILE_NAME = "godot.log"
-  
-  private final gson = GsonFactory.get()
 
   @Override
   void apply(Project project) {
+    println "in apply"
     // apply base plugin to get a free clean task
     project.apply plugin: BasePlugin
 
+    createProjectExtension(project)
+
+    // Defer to read user configuration.
+    project.afterEvaluate {
+      createGenerateTask(project)
+    }
+
+    initLoggingHook(project)
+  }
+
+  private void createProjectExtension(Project project) {
+    project.extensions.create("godot", GodotExtension)
+  }
+
+  private void createGenerateTask(Project project) {
+    def generate = project.tasks.create(GENERATE_TASK_NAME, GenerateReportTask)
+    generate.configure {
+      inputFile = getLogFile(project)
+      outputDir = new File("${project.buildDir}/$REPORT_OUTPUT_DIR")
+    }
+  }
+
+  private void initLoggingHook(Project project) {
     def start = System.currentTimeMillis()
 
     project.gradle.buildFinished { buildResult ->
@@ -26,19 +48,26 @@ class GodotPlugin implements Plugin<Project> {
         log(project, seconds.toDouble(), buildResult.getFailure() == null)
       }
     }
-
-    def outputDir = new File("${project.buildDir}/$OUTPUT_DIR")
-
-    def generate = project.tasks.create(GENERATE_TASK_NAME, GenerateReportTask)
-    generate.inputFile = new File("${project.rootDir}/$LOGFILE_NAME")
-    generate.outputDir = outputDir
   }
 
-  def log(Project project, double seconds, boolean wasSuccessful) {
+  private void log(Project project, double seconds, boolean wasSuccessful) {
+    def gson = GsonFactory.get()
+
     def record = new LogRecord(DateTime.now(), project.gradle.startParameter.taskNames, seconds, wasSuccessful)
 
     def msg = gson.toJson(record)
-    def f = new File("$project.rootDir/$LOGFILE_NAME")
+    File f = getLogFile(project)
     f.append(msg + '\n')
+  }
+
+  private File getLogFile(Project project) {
+    def dir
+    if (project.godot.persistLog) {
+      dir = new File("$project.gradle.gradleUserHomeDir/godot/${project.getName()}")
+    } else {
+      dir = new File("${project.buildDir}/$REPORT_OUTPUT_DIR")
+    }
+    dir.mkdirs()
+    return new File(dir, LOGFILE_NAME)
   }
 }

@@ -39,9 +39,13 @@ builds took. Continue working for a couple of days, then run
 
 and Godot will generate a [nice report][4] with some charts.
 
-You may or may not want to add `godot.log` to your VCS ignores (e.g.
-`.gitignore`), although as of now it is recommended. If you know a good location
-to put this file in, [let me know!][5]
+Without configuration, the logfile for your builds will be kept in the `GRADLE_USER_HOME` directory which defaults
+to `~/.gradle`. If you'd rather keep it in your project's build directory, you can configure your `build.gradle` like
+this:
+
+    godot.persistLog = false
+
+Be aware that a `gradle clean` will then remove the logfile.
 
 
 Credits
