@@ -1,4 +1,4 @@
-![TravisCI](https://travis-ci.org/hannesstruss/godot.svg?branch=master)
+[![TravisCI](https://travis-ci.org/hannesstruss/godot.svg?branch=master)][travis]
 
 What is Godot?
 ==============
@@ -78,3 +78,4 @@ License
  [3]: http://dimplejs.org/
  [4]: http://hannesstruss.github.io/godot/report.html
  [5]: http://forums.gradle.org/gradle/topics/is-it-bad-practice-for-a-plugin-to-write-to-gradle-user-home
+ [travis]: https://travis-ci.org/hannesstruss/godot
