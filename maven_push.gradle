@@ -23,6 +23,14 @@ def isReleaseBuild() {
   return version.contains("SNAPSHOT") == false
 }
 
+def getSCMTag() {
+  if (isReleaseBuild()) {
+    return version
+  } else {
+    return "HEAD"
+  }
+}
+
 def getReleaseRepositoryUrl() {
   return hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL
       : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
@@ -68,7 +76,7 @@ afterEvaluate { project ->
             url POM_SCM_URL
             connection POM_SCM_CONNECTION
             developerConnection POM_SCM_DEV_CONNECTION
-            tag version
+            tag getSCMTag()
           }
 
           licenses {
