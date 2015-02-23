@@ -178,11 +178,11 @@
         if (n == 3) {
           continue;
         }
-        var builds = 30 + Math.random() * 20;
+        var builds = 30;
         for (var nn = 0; nn < builds; nn++) {
           var record = {
             "loggedAt": new Date(now - (num - n) * 24 * 60 * 60 * 1000 + nn * 60 * 10 * 1000).toISOString(),
-            "seconds": (30 + 3 * n * Math.random())
+            "seconds": [100, 200, 300][Math.round(Math.random() * 3)]
           };
           data.push(record);
         }
@@ -257,11 +257,11 @@
       var yAxis = chart.addMeasureAxis("y", "seconds");
       yAxis.title = "Avg. seconds";
 
-      var series = chart.addSeries("Avg.", dimple.plot.line);
-      series.aggregate = dimple.aggregateMethod.avg;
+      var seriesAvg = chart.addSeries("Avg.", dimple.plot.line);
+      seriesAvg.aggregate = dimple.aggregateMethod.avg;
 
       var seriesMax = chart.addSeries("Max", dimple.plot.line);
-      series.aggregate = dimple.aggregateMethod.max;
+      seriesMax.aggregate = dimple.aggregateMethod.max;
 
       chart.assignColor("Max", "#CF6A6A");
       chart.assignColor("Avg.", "#85A5AE");
