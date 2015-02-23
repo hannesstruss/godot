@@ -13,7 +13,7 @@ how your build duration changes over time.
 How to use this
 ---------------
 
-Add the following to your project's root buildscript:
+Add the following to your project's root `build.gradle`:
 
 ```Groovy
 buildScript {
