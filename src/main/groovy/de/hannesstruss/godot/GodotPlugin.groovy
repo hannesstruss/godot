@@ -12,7 +12,6 @@ class GodotPlugin implements Plugin<Project> {
 
   @Override
   void apply(Project project) {
-    println "in apply"
     // apply base plugin to get a free clean task
     project.apply plugin: BasePlugin
 
