@@ -1,3 +1,5 @@
+![TravisCI](https://travis-ci.org/hannesstruss/godot.svg?branch=master)
+
 What is Godot?
 ==============
 
