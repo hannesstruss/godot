@@ -261,8 +261,8 @@
         return formatSeconds;
       };
 
-      var series = chart.addSeries("Avg", dimple.plot.line);
-      series.aggregate = dimple.aggregateMethod.avg;
+      var seriesAvg = chart.addSeries("Avg", dimple.plot.line);
+      seriesAvg.aggregate = dimple.aggregateMethod.avg;
 
       var seriesMax = chart.addSeries("Max", dimple.plot.line);
       seriesMax.aggregate = dimple.aggregateMethod.max;
