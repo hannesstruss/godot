@@ -223,6 +223,7 @@
       xAxis.addOrderRule("loggedAt");
 
       var yAxis = chart.addMeasureAxis("y", "seconds");
+      yAxis.title = "Time";
       yAxis._getFormat = function() {
         return formatSeconds;
       };
@@ -255,16 +256,19 @@
       xAxis.title = "Date";
 
       var yAxis = chart.addMeasureAxis("y", "seconds");
-      yAxis.title = "Avg. seconds";
+      yAxis.title = "Time";
+      yAxis._getFormat = function() {
+        return formatSeconds;
+      };
 
-      var seriesAvg = chart.addSeries("Avg.", dimple.plot.line);
+      var seriesAvg = chart.addSeries("Avg", dimple.plot.line);
       seriesAvg.aggregate = dimple.aggregateMethod.avg;
 
       var seriesMax = chart.addSeries("Max", dimple.plot.line);
       seriesMax.aggregate = dimple.aggregateMethod.max;
 
       chart.assignColor("Max", "#CF6A6A");
-      chart.assignColor("Avg.", "#85A5AE");
+      chart.assignColor("Avg", "#85A5AE");
 
       chart.addLegend(0, 10, 700, 20, "right");
 
