@@ -129,6 +129,11 @@
       <div class="graph-avg"></div>
     </section>
 
+    <section class="chart">
+      <h2>Success vs. Failure</h2>
+      <div class="graph-success-failure"></div>
+    </section>
+
   </div>
 
   <footer>
@@ -206,6 +211,8 @@
       var dateAtMidnight = new Date(date);
       setToMidnight(dateAtMidnight);
       d["DayDate"] = dateAtMidnight;
+      d["Result"] = d["wasSuccessful"] ? "Success" : "Failure";
+      d["Time"] = d["seconds"];
     });
 
   </script>
@@ -275,6 +282,25 @@
       chart.draw();
     }
 
+    function makeSuccessFailureChart(data) {
+
+
+      var svg = dimple.newSvg(".graph-success-failure", 800, 400);
+      var chart = new dimple.chart(svg, data);
+
+      var yAxis = chart.addMeasureAxis("p", "Time");
+      yAxis.title = "Time";
+      yAxis._getFormat = function() {
+        return formatSeconds;
+      };
+
+      var seriesMax = chart.addSeries("Result", dimple.plot.pie);
+
+      chart.addLegend(0, 10, 700, 20, "right");
+
+      chart.draw();
+    }
+
   </script>
 
   <script>
@@ -286,6 +312,7 @@
 
     // makeScatterChart(DATA);
     makeAvgChart(DATA);
+    makeSuccessFailureChart(DATA);
   </script>
 
 </body>
