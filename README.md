@@ -22,7 +22,7 @@ buildScript {
   }
   dependencies {
     // ... other buildscript dependencies, e.g. the Android Gradle plugin
-    classpath 'de.hannesstruss:godot:0.1'
+    classpath 'de.hannesstruss:godot:+'
   }
 }
 
