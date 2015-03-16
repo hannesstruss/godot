@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 0.3 (upcoming)
+----------------------
+
+* Fixed #15, reports being broken on Firefox
+
 Version 0.2 (2014-03-14)
 ------------------------
 
