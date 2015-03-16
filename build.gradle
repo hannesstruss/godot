@@ -22,6 +22,6 @@ project.targetCompatibility = 1.6
 
 project.archivesBaseName = 'godot'
 group = 'de.hannesstruss'
-version = '0.2'
+version = '0.3-SNAPSHOT'
 
 apply from: 'maven_push.gradle'
