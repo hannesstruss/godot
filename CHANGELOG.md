@@ -5,6 +5,7 @@ Version 0.3 (upcoming)
 ----------------------
 
 * Fixed #15, reports being broken on Firefox
+* Depend on IOUtils using proper group ID
 
 Version 0.2 (2014-03-14)
 ------------------------
