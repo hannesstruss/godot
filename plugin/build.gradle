@@ -1,0 +1,22 @@
+apply plugin: 'groovy'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+
+    compile 'joda-time:joda-time:2.7'
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'commons-io:commons-io:2.4'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.assertj:assertj-core:1.7.1'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+}
+
+project.targetCompatibility = 1.6
+
+apply from: '../maven_push.gradle'
