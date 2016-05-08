@@ -155,6 +155,8 @@
 
   <script>
 
+    var TODAY = new Date("${today.toString()}");
+
     function zeroPad(x) {
       if (x < 10) {
         return "0" + x;
@@ -177,7 +179,7 @@
 
     function getDummyData() {
       var data = [];
-      var now = +new Date()
+      var now = +TODAY
       var num = 19;
       for (var n = 0; n <= num; n++) {
         if (n == 3) {
@@ -304,7 +306,7 @@
   </script>
 
   <script>
-    var nineDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7);
+    var nineDaysAgo = new Date(TODAY - 1000 * 60 * 60 * 24 * 7);
     setToMidnight(nineDaysAgo);
     makeWeekChart(DATA.filter(function(d) {
       return d["Date"].getTime() > nineDaysAgo.getTime();

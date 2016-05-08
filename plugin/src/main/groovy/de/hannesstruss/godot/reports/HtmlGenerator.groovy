@@ -31,7 +31,7 @@ class HtmlGenerator {
         secondsLastWeek: secondsSpentSince({ it.minusDays 7 }, logRecords),
         secondsLastMonth: secondsSpentSince({ it.minusDays 31 }, logRecords),
         projectName: projectName,
-        today: new LocalDate(),
+        today: clock.now(),
         fmt: new TimeFormatter()
     ]
   }
