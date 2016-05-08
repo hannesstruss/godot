@@ -1,5 +1,7 @@
-package de.hannesstruss.godot
+package de.hannesstruss.godot.plugin
 
+import de.hannesstruss.godot.LogParser
+import de.hannesstruss.godot.ReportGenerator
 import de.hannesstruss.godot.datetime.WallClock
 import org.apache.commons.io.IOUtils
 import org.gradle.api.DefaultTask

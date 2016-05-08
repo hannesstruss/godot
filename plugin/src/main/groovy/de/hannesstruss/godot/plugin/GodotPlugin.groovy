@@ -1,5 +1,9 @@
-package de.hannesstruss.godot
+package de.hannesstruss.godot.plugin
 
+import de.hannesstruss.godot.GsonFactory
+import de.hannesstruss.godot.LogRecord
+import de.hannesstruss.godot.plugin.GenerateReportTask
+import de.hannesstruss.godot.plugin.GodotExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.BasePlugin
