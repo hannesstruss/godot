@@ -20,12 +20,12 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 def isReleaseBuild() {
-  return version.contains("SNAPSHOT") == false
+  return VERSION_NAME.contains("SNAPSHOT") == false
 }
 
 def getSCMTag() {
   if (isReleaseBuild()) {
-    return version
+    return VERSION_NAME
   } else {
     return "HEAD"
   }
@@ -57,7 +57,7 @@ afterEvaluate { project ->
 
         pom.groupId = GROUP
         pom.artifactId = POM_ARTIFACT_ID
-        pom.version = version
+        pom.version = VERSION_NAME
 
         repository(url: getReleaseRepositoryUrl()) {
           authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
