@@ -1,5 +1,7 @@
 package de.hannesstruss.godot
 
+import de.hannesstruss.godot.reports.LogRecord
+import de.hannesstruss.godot.reports.ReportGenerator
 import org.joda.time.DateTime
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package de.hannesstruss.godot
+package de.hannesstruss.godot.reports
 
 import de.hannesstruss.godot.datetime.Clock
 import groovy.text.SimpleTemplateEngine

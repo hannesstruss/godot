@@ -1,4 +1,4 @@
-package de.hannesstruss.godot
+package de.hannesstruss.godot.reports
 
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
