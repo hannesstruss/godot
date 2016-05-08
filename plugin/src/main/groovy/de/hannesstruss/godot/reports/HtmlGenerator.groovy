@@ -5,10 +5,10 @@ import groovy.text.SimpleTemplateEngine
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 
-class ReportGenerator {
+class HtmlGenerator {
   Clock clock
 
-  ReportGenerator(Clock clock) {
+  HtmlGenerator(Clock clock) {
     this.clock = clock
   }
 
