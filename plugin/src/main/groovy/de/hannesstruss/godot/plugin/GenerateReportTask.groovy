@@ -20,16 +20,12 @@ class GenerateReportTask extends DefaultTask {
 
   @TaskAction
   public void generate() {
-    outputDir.mkdirs();
-
-    new StaticFilesGenerator(outputDir).copyStaticFiles()
-    generateReportHtml();
-  }
-
-  private void generateReportHtml() {
-    def outputFile = new File(outputDir, "report.html")
-
     if (inputFile.exists()) {
+      outputDir.mkdirs();
+
+      new StaticFilesGenerator(outputDir).copyStaticFiles()
+
+      def outputFile = new File(outputDir, "report.html")
       def records = LogParser.parse(inputFile);
 
       def generator = new ReportGenerator(new WallClock())
