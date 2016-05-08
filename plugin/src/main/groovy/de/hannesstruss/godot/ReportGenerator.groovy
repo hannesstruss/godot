@@ -16,7 +16,10 @@ class ReportGenerator {
     def resource = getClass().getResource("/report/report.html")
     def template = resource.text
     def engine = new SimpleTemplateEngine()
-    engine.createTemplate(template).make(getData(logRecords, projectName)).writeTo(outputWriter)
+    engine
+        .createTemplate(template)
+        .make(getData(logRecords, projectName))
+        .writeTo(outputWriter)
   }
 
   private Map getData(List<LogRecord> logRecords, String projectName) {
