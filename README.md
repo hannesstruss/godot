@@ -1,4 +1,4 @@
-[![TravisCI](https://travis-ci.org/hannesstruss/godot.svg?branch=master)][travis]
+# :warning: Godot is unmaintained. There are [better projects out there](https://github.com/passy/build-time-tracker-plugin), use them 🙂
 
 What is Godot?
 ==============
